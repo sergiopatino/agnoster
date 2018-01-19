@@ -126,6 +126,12 @@ function agnoster::git -d "Display the actual git state"
 end
 # }}}
 
+function agnoster::virtualenv -d "Display Python virtual environment"
+  if test "$VIRTUAL_ENV"
+    agnoster::segment white black (basename $VIRTUAL_ENV)
+  end
+end
+
 function agnoster::dir -d 'Print current working directory'
   set -l dir (prompt_pwd)
   if set -q AGNOSTER_SEGMENT_SEPARATOR[2]
@@ -144,7 +150,7 @@ function fish_prompt
   set -g __agnoster_last_status $status
 
   agnoster::status
-  agnoster::context
+  agnoster::virtualenv
   agnoster::dir
   agnoster::git
   agnoster::finish
