@@ -112,6 +112,12 @@ function agnoster::git::staged
 end
 # }}}
 
+function agnoster::virtualenv -d "Display Python virtual environment"
+  if test "$VIRTUAL_ENV"
+    agnoster::segment white black (basename $VIRTUAL_ENV)
+  end
+end
+
 function agnoster::git -d "Display the actual git state"
   agnoster::git::is_repo; or return
 
@@ -146,6 +152,7 @@ function fish_prompt
   set -g __agnoster_last_status $status
 
   agnoster::status
+  agnoster::virtualenv
   #agnoster::context
   agnoster::dir
   agnoster::git
