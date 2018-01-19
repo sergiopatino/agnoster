@@ -6,7 +6,7 @@ end
 
 agnoster::set_default AGNOSTER_SEGMENT_SEPARATOR '' \u2502
 agnoster::set_default AGNOSTER_SEGMENT_RSEPARATOR '' \u2502
-
+agnoster::set_default AGNOSTER_PROMPT_CHAR  \u276f\u276f
 agnoster::set_default AGNOSTER_ICON_ERROR \u2717
 agnoster::set_default AGNOSTER_ICON_ROOT \u26a1
 agnoster::set_default AGNOSTER_ICON_BGJOBS \u2699
@@ -60,7 +60,7 @@ function agnoster::status
   end
 
   if set -q icons
-    agnoster::segment black red "$icons "
+    agnoster::segment black red "$icons"
   end
 end
 
@@ -136,7 +136,9 @@ end
 
 function agnoster::finish
   agnoster::segment normal normal
-  echo -n ' '
+  echo
+  set_color red
+  echo -n "$AGNOSTER_PROMPT_CHAR "
   set -e __agnoster_background
 end
 
@@ -144,7 +146,7 @@ function fish_prompt
   set -g __agnoster_last_status $status
 
   agnoster::status
-  agnoster::context
+  #agnoster::context
   agnoster::dir
   agnoster::git
   agnoster::finish
